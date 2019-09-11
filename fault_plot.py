@@ -20,14 +20,21 @@ phase2 = []
 phase3 = []
 
 
-
+plt.ion()
 for i in range (0,datasize,datashape[1]):
     time.append (data_fix[0,i])
     phase1.append (data_fix[0,i+1])
     phase2.append (data_fix[0,i+2])
     phase3.append (data_fix[0,i+3])
 
-plt.figure()
+plt.figure("3 Phase fault")
+plt.xlabel("time")
+plt.ylabel("volts")
+
+#plt.figure("Phase 1")
+#plt.figure("Phase 2")
+#plt.figure("Phase 3")
+
 for j in range (datashape[0]):
     plt.plot(time[j],phase1[j],'g--',color='green',marker='.',linewidth=2,markersize=2,linestyle='-')
     plt.plot(time[j],phase2[j],'b--',color='blue',marker='.',linewidth=2,markersize=2,linestyle='-')
@@ -35,5 +42,4 @@ for j in range (datashape[0]):
     plt.draw()
     plt.pause(0.0001)
 
-#plt.figure()
 plt.show()

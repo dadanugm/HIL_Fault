@@ -2,6 +2,7 @@
 #!/usr/bin/env python
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 import tables
 file = tables.open_file('data1.mat')
 getdata = file.root.data1[:]
@@ -19,27 +20,26 @@ phase1 = []
 phase2 = []
 phase3 = []
 
-
-plt.ion()
 for i in range (0,datasize,datashape[1]):
     time.append (data_fix[0,i])
     phase1.append (data_fix[0,i+1])
     phase2.append (data_fix[0,i+2])
     phase3.append (data_fix[0,i+3])
 
-plt.figure("3 Phase fault")
-plt.xlabel("time")
-plt.ylabel("volts")
+fig, ax = plt.subplots()
+ax.axes.set_xlim(0,0.7)
+ax.axes.set_ylim(-1000000,1200000)
+line1, = ax.plot([],[],'g-')
+line2, = ax.plot([],[],'r-')
+line3, = ax.plot([],[],'b-')
 
-#plt.figure("Phase 1")
-#plt.figure("Phase 2")
-#plt.figure("Phase 3")
+def animate(num,time,phase1,phase2,phas3,line1,line2,line3):
+    line1.set_data(time[:num],phase1[:num])
+    line2.set_data(time[:num],phase2[:num])
+    line3.set_data(time[:num],phase3[:num])
+    #line.set_ydata(phase1[:num])
+    #return line,
 
-for j in range (datashape[0]):
-    plt.plot(time[j],phase1[j],'g--',color='green',marker='.',linewidth=2,markersize=2,linestyle='-')
-    plt.plot(time[j],phase2[j],'b--',color='blue',marker='.',linewidth=2,markersize=2,linestyle='-')
-    plt.plot(time[j],phase3[j],'r--',color='red',marker='.',linewidth=2,markersize=2,linestyle='-')
-    plt.draw()
-    plt.pause(0.0001)
+ani = animation.FuncAnimation (fig,animate,frames=500,interval=1,fargs=[time, phase1, phase2, phase3, line1, line2, line3],blit=False)
 
 plt.show()

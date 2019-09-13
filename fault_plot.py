@@ -27,8 +27,9 @@ for i in range (0,datasize,datashape[1]):
     phase3.append (data_fix[0,i+3])
 
 fig, ax = plt.subplots()
-ax.axes.set_xlim(0,0.7)
-ax.axes.set_ylim(-1000000,1200000)
+ax.set_xlim(0,0.7)
+ax.set_ylim(-1000000,1200000)
+
 line1, = ax.plot([],[],'g-')
 line2, = ax.plot([],[],'r-')
 line3, = ax.plot([],[],'b-')
